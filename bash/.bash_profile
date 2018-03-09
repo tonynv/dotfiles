@@ -1,0 +1,1 @@
+export SHELL=$(which bash)
