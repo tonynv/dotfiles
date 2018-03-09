@@ -26,8 +26,8 @@ xcode-select --install
 # Clone dotfiles
 git clone --recursive git@github.com:avattathil/dotfiles.git  && mv dotfiles .dotfiles  
 # Install tmux configs
-#|#ln -s submodules/tmux_configs/.tmux.conf ~/.tmux.conf 
-#|#ln -s configs/tmux/tmux.tonyv  ~/.tmux.conf.local
+cp submodules/tmux_configs/.tmux.conf ~/.tmux.conf 
+cp configs/tmux/tmux.tonyv  ~/.tmux.conf.local
 
 #mkdir -p ~/.vim/colors
 #cp vim/wombat.vim ~/.vim/colors 
@@ -41,4 +41,20 @@ brew install reattach-to-user-namespace
 
 # Install  python vim configs
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/avattathil/python-vimrc/18574648b741e571cdfc29340b7e3e2ee03e2400/setup.sh)"
-source ~/.bash_profile
+
+# BASH 
+if [ -f `which powerline-daemon` ]; then
+  powerline-daemon -q
+  POWERLINE_BASH_CONTINUATION=1
+  POWERLINE_BASH_SELECT=1
+  . ~/.usr/bin/powerline.sh
+fi
+
+
+# ZSH
+brew install zsh-syntax-highlighting
+source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+TMUX
+~/.vim/bundle/YouCompleteMe/install.py --clang-completer
+
