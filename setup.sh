@@ -7,3 +7,6 @@ git clone --recursive git@github.com:avattathil/dotfiles.git && mv dotfiles .dot
 # Install tmux configs
 ln -s .dotfiles/submodules/tmux_configs/.tmux.conf ~/.tmux.conf 
 ln -s .dotfiles/configs/tmux/tmux.tonyv  ~/.tmux.conf.local
+# Install  python vim configs
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/avattathil/python-vimrc/18574648b741e571cdfc29340b7e3e2ee03e2400/setup.sh)"
+
