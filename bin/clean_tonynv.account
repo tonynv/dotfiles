@@ -1,0 +1,1 @@
+python2 /Users/tonynv/.usr/bin//cfnreaper.py -c /Users/tonynv/.usr/bin/cfnreaper.yml -d -v
