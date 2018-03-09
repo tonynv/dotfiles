@@ -1,3 +1,9 @@
 [submodule "submodule"]
 	path = submodule
 	url = https://github.com/gpakosz/.tmux.git
+[submodule "submodules/tmux_configs"]
+	path = submodules/tmux_configs
+	url = https://github.com/avattathil/tmux_configs
+[submodule "submodules/python-vimrc"]
+	path = submodules/python-vimrc
+	url = https://github.com/avattathil/python-vimrc

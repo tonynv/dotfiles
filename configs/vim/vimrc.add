@@ -1,0 +1,14 @@
+# json/cfn (folding support)
+set mouse=a                                                                                                                                                                                                                                                               
+augroup json_autocmd
+    autocmd!
+    autocmd FileType .template set foldcolumn=3
+    autocmd FileType .template set softtabstop=2 tabstop=8
+    autocmd FileType .template set foldmethod=manual
+augroup END 
+
+nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
+vnoremap <Space> zf
+
+nnoremap <C-B> :!aws cloudformation validate-template --template-body file:///%:p<CR>
+
