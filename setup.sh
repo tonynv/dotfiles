@@ -5,5 +5,5 @@ xcode-select --install
 # Clone dotfiles
 git clone --recursive git@github.com:avattathil/dotfiles.git && mv dotfiles .dotfiles  
 # Install tmux configs
-ln -s .dotfiles/submodule/.tmux.conf && cp .dotfiles/tmux.tonyv  ~/.tmux.conf.local
-
+ln -s .dotfiles/submodules/tmux_configs/.tmux.conf ~/.tmux.conf 
+ln -s .dotfiles/configs/tmux/tmux.tonyv  ~/.tmux.conf.local
