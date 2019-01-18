@@ -22,7 +22,7 @@ export PATH=$BIN_DIR:/usr/local/bin:$PATH
 xcode-select --install
 
 # Install Homebrew
-#|#/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 # Clone dotfiles
 git clone --recursive git@github.com:avattathil/dotfiles.git  && mv dotfiles .dotfiles  
 # Install tmux configs
@@ -38,6 +38,7 @@ brew install macvim --env-std --override-system-vim
 brew install ispell
 brew install tmux
 brew install reattach-to-user-namespace
+brew install ctags
 
 # Install  python vim configs
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/avattathil/python-vimrc/18574648b741e571cdfc29340b7e3e2ee03e2400/setup.sh)"
