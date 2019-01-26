@@ -22,9 +22,9 @@ export PATH=$BIN_DIR:/usr/local/bin:$PATH
 xcode-select --install
 
 # Install Homebrew
-#|#/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 # Clone dotfiles
-git clone --recursive git@github.com:avattathil/dotfiles.git  && mv dotfiles .dotfiles  
+git clone --recurse-submodules git@github.com:avattathil/dotfiles.git  && mv dotfiles .dotfiles  
 # Install tmux configs
 cp submodules/tmux_configs/.tmux.conf ~/.tmux.conf 
 cp configs/tmux/tmux.tonyv  ~/.tmux.conf.local
@@ -55,8 +55,7 @@ fi
 # ZSH
 brew install zsh-syntax-highlighting
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-git clone https://github.com/bhilburn/powerlevel9k.git ~/powerlevel9k
-echo 'source  ~/powerlevel9k/powerlevel9k.zsh-theme' >> ~/.zshrc
+#git clone https://github.com/bhilburn/powerlevel9k.git ~/powerlevel9k
 git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
 
 
