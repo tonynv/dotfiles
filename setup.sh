@@ -23,7 +23,9 @@ export PATH=$BIN_DIR:/usr/local/bin:$PATH
 xcode-select --install
 
 # Install Homebrew
-/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+HOMEBREW='https://raw.githubusercontent.com/Homebrew/install/master/install'
+echo | /usr/bin/ruby -e "$(curl -fsSL $HOMEBREW)" > /dev/null
+if [ $? -eq 0 ]; then echo 'Homebrew Install'; else echo 'Homebrew Install error'; fi
 # Clone dotfiles
 git clone --recurse-submodules git@github.com:avattathil/dotfiles.git  && mv dotfiles .dotfiles  
 # Install tmux configs
