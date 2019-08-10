@@ -34,7 +34,7 @@ cp configs/tmux/tmux.tonyv  ~/.tmux.conf.local
 
 # Install brew packages
 brew install cmake
-brew install macvim --env-std --override-system-vim
+brew install macvim --env override-system-vim
 brew install ispell
 brew install tmux
 brew install reattach-to-user-namespace
