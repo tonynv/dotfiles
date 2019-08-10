@@ -29,6 +29,7 @@ git clone --recurse-submodules git@github.com:avattathil/dotfiles.git  && mv dot
 # Install tmux configs
 cp submodules/tmux_configs/.tmux.conf ~/.tmux.conf 
 cp configs/tmux/tmux.tonyv  ~/.tmux.conf.local
+cp configs/vim/vimrc  ~/.vimrc
 
 # Install brew packages
 brew install vim
@@ -39,21 +40,10 @@ brew install reattach-to-user-namespace
 brew install ctags
 brew tap sambadevi/powerlevel9k
 brew install powerlevel9k
+brew install zsh-syntax-highlighting
 
 pip3 install awscli
 
-# Install  python vim configs
-
-# BASH 
-#if [ -f `which powerline-daemon` ]; then
-#  powerline-daemon -q
-#  POWERLINE_BASH_CONTINUATION=1
-#  POWERLINE_BASH_SELECT=1
-#  . ~/.usr/bin/powerline.sh
-#fi
-
-# ZSH
-brew install zsh-syntax-highlighting
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 echo "export PATH=/usr/local/bin:$PATH" >~/.zshrc
 echo 'source /usr/local/Cellar/powerlevel9k/0.6.7/powerlevel9k.zsh-theme ' >> ~/.zshrc
