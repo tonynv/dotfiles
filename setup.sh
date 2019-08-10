@@ -37,18 +37,22 @@ brew install ispell
 brew install tmux
 brew install reattach-to-user-namespace
 brew install ctags
+brew tap sambadevi/powerlevel9k
+brew install powerlevel9k
+
+pip3 install awscli
 
 # Install  python vim configs
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/avattathil/python-vimrc/18574648b741e571cdfc29340b7e3e2ee03e2400/setup.sh)"
 ~/.vim/bundle/YouCompleteMe/install.py --clang-completer
 
 # BASH 
-if [ -f `which powerline-daemon` ]; then
-  powerline-daemon -q
-  POWERLINE_BASH_CONTINUATION=1
-  POWERLINE_BASH_SELECT=1
-  . ~/.usr/bin/powerline.sh
-fi
+#if [ -f `which powerline-daemon` ]; then
+#  powerline-daemon -q
+#  POWERLINE_BASH_CONTINUATION=1
+#  POWERLINE_BASH_SELECT=1
+#  . ~/.usr/bin/powerline.sh
+#fi
 
 # ZSH
 brew install zsh-syntax-highlighting
