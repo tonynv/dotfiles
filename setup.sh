@@ -43,7 +43,7 @@ brew install powerlevel9k
 brew install zsh-syntax-highlighting
 
 pip3 install awscli
-
+vim +'PlugInstall --sync' +qa
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 echo "export PATH=/usr/local/bin:$PATH" >~/.zshrc
 echo 'source /usr/local/Cellar/powerlevel9k/0.6.7/powerlevel9k.zsh-theme ' >> ~/.zshrc
