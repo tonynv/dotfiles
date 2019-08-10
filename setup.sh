@@ -43,8 +43,6 @@ brew install powerlevel9k
 pip3 install awscli
 
 # Install  python vim configs
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/avattathil/python-vimrc/18574648b741e571cdfc29340b7e3e2ee03e2400/setup.sh)"
-~/.vim/bundle/YouCompleteMe/install.py --clang-completer
 
 # BASH 
 #if [ -f `which powerline-daemon` ]; then
@@ -57,7 +55,7 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/avattathil/python-vimrc/18
 # ZSH
 brew install zsh-syntax-highlighting
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
-echo "export PATH=/usr/local/bin:$PATH" >>~/.zshrc
+echo "export PATH=/usr/local/bin:$PATH" >~/.zshrc
+echo 'source /usr/local/Cellar/powerlevel9k/0.6.7/powerlevel9k.zsh-theme ' >> ~/.zshrc
 
 
