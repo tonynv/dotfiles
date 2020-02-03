@@ -683,7 +683,7 @@ augroup json_autocmd
     autocmd FileType .template set softtabstop=2 tabstop=8
     autocmd FileType .template set foldmethod=manual
     autocmd FileType .template set mouse=a
-augroup END 
+augroup END
 
 nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
 vnoremap <Space> zf
@@ -733,19 +733,19 @@ function! CreateCenteredFloatingWindow()
 endfunction
 
 " When term starts, auto go into insert mode
-autocmd TermOpen * startinsert
+" autocmd TermOpen * startinsert
 
 " Turn off line numbers etc
-autocmd TermOpen * setlocal listchars= nonumber norelativenumber
-
-function! ToggleTerm(cmd)
-    if empty(bufname(a:cmd))
-        call CreateCenteredFloatingWindow()
-        call termopen(a:cmd, { 'on_exit': function('OnTermExit') })
-    else
-        bwipeout!
-    endif
-endfunction
+"autocmd TermOpen * setlocal listchars= nonumber norelativenumber
+"
+"function! ToggleTerm(cmd)
+"    if empty(bufname(a:cmd))
+"        call CreateCenteredFloatingWindow()
+"        call termopen(a:cmd, { 'on_exit': function('OnTermExit') })
+"    else
+"        bwipeout!
+"    endif
+"endfunction
 
 " Open Project
 function! ToggleProject()
