@@ -31,6 +31,7 @@ call plug#begin(expand('~/.vim/plugged'))
 "*****************************************************************************
 "" Plug install packages
 "*****************************************************************************
+Plug 'Shougo/unite.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'tpope/vim-commentary'
@@ -54,14 +55,21 @@ Plug 'digitalrounin/vim-yaml-folds'
 Plug 'chase/vim-ansible-yaml'
 Plug 'wookiehangover/jshint.vim'
 
+Plug 'speshak/vim-cfn'
+Plug 'scrooloose/syntastic'
+Plug 'Shougo/vimproc.vim', {'do' : 'make'}
+"Plug 'Quramy/vison'
+Plug 'Quramy/tsuquyomi'
 
 
-if isdirectory('/usr/local/opt/fzf')
-    Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
-else
-    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
-    Plug 'junegunn/fzf.vim'
-endif
+"Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+"if isdirectory('/usr/local/opt/fzf')
+"    Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
+"else
+"    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
+"    Plug 'junegunn/fzf.vim'
+"endif
 let g:make = 'gmake'
 if exists('make')
     let g:make = 'make'
@@ -105,7 +113,6 @@ Plug 'jelera/vim-javascript-syntax'
 " python
 "" Python Bundle
 Plug 'davidhalter/jedi-vim'
-Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}
 
 
 "*****************************************************************************
@@ -282,6 +289,8 @@ let g:NERDTreeWinSize = 50
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite
 nnoremap <silent> <F2> :NERDTreeFind<CR>
 nnoremap <silent> <F3> :NERDTreeToggle<CR>
+nnoremap <F5> :IndentLinesToggle<CR>
+nnoremap <F6> :set nonumber!<CR>
 
 " grep.vim
 nnoremap <silent> <leader>f :Rgrep<CR>
@@ -442,6 +451,19 @@ if has('macunix')
     vmap <C-c> :w !pbcopy<CR><CR>
 endif
 
+"Auto set paste mode
+
+let &t_SI .= "\<Esc>[?2004h"
+let &t_EI .= "\<Esc>[?2004l"
+
+inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
+
+function! XTermPasteBegin()
+  set pastetoggle=<Esc>[201~
+  set paste
+  return ""
+endfunction
+
 "" Buffer nav
 noremap <leader>z :bp<CR>
 noremap <leader>q :bp<CR>
@@ -508,12 +530,12 @@ let g:go_highlight_extra_types = 1
 
 autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4 softtabstop=4
 
-augroup completion_preview_close
-    autocmd!
-    if v:version > 703 || v:version == 703 && has('patch598')
-        autocmd CompleteDone * if !&previewwindow && &completeopt =~ 'preview' | silent! pclose | endif
-    endif
-augroup END
+"augroup completion_preview_close
+""    autocmd!
+""    if v:version > 703 || v:version == 703 && has('patch598')
+""        autocmd CompleteDone * if !&previewwindow && &completeopt =~ 'preview' | silent! pclose | endif
+""    endif
+""augroup END
 
 augroup go
 
@@ -560,8 +582,8 @@ augroup vimrc-python
                 \ cinwords=if,elif,else,for,while,try,except,finally,def,class,with
 augroup END
 
-" jedi-vim
-let g:jedi#popup_on_dot = 0
+"jedi-vim
+let g:jedi#popup_on_dot = 1
 let g:jedi#goto_assignments_command = "<leader>g"
 let g:jedi#goto_definitions_command = "<leader>d"
 let g:jedi#documentation_command = "K"
@@ -571,7 +593,7 @@ let g:jedi#show_call_signatures = "0"
 let g:jedi#completions_command = "<C-Space>"
 let g:jedi#smart_auto_mappings = 0
 
-" syntastic
+" syntastic (uffer redraw)
 let g:syntastic_python_checkers=['python', 'flake8']
 
 " vim-airline
@@ -641,7 +663,7 @@ augroup END
 
 
 set foldmethod=syntax
-set foldlevelstart=20
+set foldlevel=1
 
 " auto format"
 
@@ -670,3 +692,15 @@ nnoremap <C-B> :!aws cloudformation validate-template --template-body file:///%:
 
 set cursorline
 
+"cfn-lint
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_cloudformation_checkers = ['cfn_lint']
+
+autocmd BufRead,BufNewFile .travis Vison travis.json

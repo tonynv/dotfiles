@@ -1,2 +1,0 @@
-aws s3 ls |egrep 'taskcat|tcat' | grep -v report | awk '{print $3}'| while read B; do aws s3 rb s3://$B --force ; done
-
