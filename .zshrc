@@ -6,7 +6,7 @@ export PYTHON_CONFIGURE_OPTS="--enable-framework"
 
 
 # Path to your oh-my-zsh installation.
-export ZSH=~/.dotfiles/.oh-my-zsh
+export ZSH=~/.dotfiles/.ohmyzsh
 
 
 ZSH_THEME="agnoster"
