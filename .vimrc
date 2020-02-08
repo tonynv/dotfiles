@@ -55,6 +55,8 @@ Plug 'digitalrounin/vim-yaml-folds'
 Plug 'chase/vim-ansible-yaml'
 Plug 'wookiehangover/jshint.vim'
 
+# tdev 
+Plug 'andrewstuart/vim-kubernetes'
 Plug 'speshak/vim-cfn'
 Plug 'scrooloose/syntastic'
 Plug 'Shougo/vimproc.vim', {'do' : 'make'}
