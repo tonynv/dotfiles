@@ -7,3 +7,6 @@
 [submodule "submodules/python-vimrc"]
 	path = submodules/python-vimrc
 	url = https://github.com/avattathil/python-vimrc
+[submodule ".ohmyzsh"]
+	path = .ohmyzsh
+	url = https://github.com/avattathil/.ohmyzsh.git
