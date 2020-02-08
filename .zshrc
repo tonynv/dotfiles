@@ -6,7 +6,7 @@ export PYTHON_CONFIGURE_OPTS="--enable-framework"
 
 
 # Path to your oh-my-zsh installation.
-export ZSH=/Users/tonynv/.oh-my-zsh
+export ZSH=~/.dotfiles/.oh-my-zsh
 
 
 ZSH_THEME="agnoster"
@@ -73,7 +73,7 @@ export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3
 export PROJECT_HOME=~/PycharmProjects
 
 # directory for virtualenvs created using virtualenvwrapper
-export WORKON_HOME=/Users/tonynv/.virtualenvs
+export WORKON_HOME=~/.virtualenvs
 # ensure all new environments are isolated from the site-packages directory
 export VIRTUALENVWRAPPER_VIRTUALENV_ARGS='--no-site-packages'
 # use the same directory for virtualenvs as virtualenvwrapper
