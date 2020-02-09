@@ -85,6 +85,4 @@ export PIP_RESPECT_VIRTUALENV=true
 export PYENV_VIRTUALENV_DISABLE_PROMPT=1
 source /usr/local/bin/virtualenvwrapper.sh
 
-eval $(thefuck --alias)
-
 echo "initalizing..."

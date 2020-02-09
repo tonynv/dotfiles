@@ -14,5 +14,9 @@ sudo apt-get install zsh python-pip virtualenv linuxbrew-wrapper -y
 # Brew taps
 brew install jesseduffield/lazygit/lazygit
 # Brew Installs
-brew install thefuck neovim lazygit awscli
+brew install thefuck neovim lazygit awscli pyenv pyenv-virtualenvwrapper pre-commit  git-secrets python@3.8 
+
+# pip installs
+# sudo pip install virtualenvwrapper
+
 
