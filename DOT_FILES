@@ -6,3 +6,11 @@ ln -s ~/.dotfiles/.vimrc ~/
 ln -s ~/.dotfiles/.zshrc ~/
 ln -s ~/.dotfiles/.ohmyzsh ~/
 
+
+
+
+# Ubuntu
+curl https://pyenv.run | zsh
+apt-get install zsh python-pip virtualenv linuxbrew-wrapper -y
+pip install lazygit thefuck
+
