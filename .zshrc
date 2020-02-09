@@ -19,6 +19,7 @@ export PYTHON_CONFIGURE_OPTS="--enable-framework"
 
 # Path to your oh-my-zsh installation.
 export ZSH=~/.dotfiles/.ohmyzsh
+export SHOW_AWS_PROMPT=false
 
 
 ZSH_THEME="agnoster"
