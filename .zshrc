@@ -1,5 +1,17 @@
 #.zshrc
 # If you come from bash you might have to change your $PATH.
+if [[ "$OSTYPE" == "linux-gnu" ]]; then
+        # Linux
+    export PATH=$PATH:~/.linuxbrew/bin/
+    export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+        # Mac OSX
+    export PATH="$HOME/.usr/bin:/usr/local/bin:/usr/local/sbin:$PATH"
+    export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3
+    export PROJECT_HOME=~/PycharmProjects
+else
+        # Unknown.
+fi
 export PATH="$HOME/.usr/bin:/usr/local/bin:/usr/local/sbin:$PATH"
 export PYTHONBREAKPOINT="pudb.set_trace"
 export PYTHON_CONFIGURE_OPTS="--enable-framework"
@@ -70,8 +82,6 @@ eval "$(pyenv virtualenv-init -)"
 export PYENV_ROOT=$HOME/.pyenv
 export PATH=$PYENV_ROOT/bin:$PATH
 
-export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3
-export PROJECT_HOME=~/PycharmProjects
 
 # directory for virtualenvs created using virtualenvwrapper
 export WORKON_HOME=~/.virtualenvs
@@ -80,7 +90,6 @@ export VIRTUALENVWRAPPER_VIRTUALENV_ARGS='--no-site-packages'
 # use the same directory for virtualenvs as virtualenvwrapper
 export PIP_VIRTUALENV_BASE=$WORKON_HOME
 # makes pip detect an active virtualenv and install to it
-source /usr/local/bin/virtualenvwrapper.sh
 export PIP_RESPECT_VIRTUALENV=true
 export PYENV_VIRTUALENV_DISABLE_PROMPT=1
 source /usr/local/bin/virtualenvwrapper.sh
