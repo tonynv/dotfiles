@@ -9,6 +9,7 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
     export PATH="$HOME/.usr/bin:/usr/local/bin:/usr/local/sbin:$PATH"
     export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3
     export PROJECT_HOME=~/PycharmProjects
+    export AWS_PROFILE=tonynv
 else
         # Unknown.
 fi
@@ -64,7 +65,6 @@ alias aws_set_region='if [[ $1 == "" ]]; then  echo "No region provided!! \n use
 #alias pip=pip3
 alias vim=/usr/local/bin/nvim
 
-export AWS_PROFILE=tonynv
 export EDITOR='vim'
 
 #PROMPT="$PS1
