@@ -3,7 +3,7 @@
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
         # Linux
     export PATH=$PATH:~/.linuxbrew/bin/
-    export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3
+    export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python
 elif [[ "$OSTYPE" == "darwin"* ]]; then
         # Mac OSX
     export PATH="$HOME/.usr/bin:/usr/local/bin:/usr/local/sbin:$PATH"
