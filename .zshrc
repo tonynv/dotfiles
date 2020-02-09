@@ -45,7 +45,6 @@ alias ctags="`brew --prefix`/bin/ctags"
 alias aws_get_account_id='aws sts get-caller-identity | jq -r ".Account"'
 alias aws_set_account_id='export ACCOUNT=$(aws sts get-caller-identity | jq -r ".Account") ;echo "AWS ACCOUNT ID Exported => \$ACCOUNT ($ACCOUNT)"'
 alias aws_set_region='if [[ $1 == "" ]]; then  echo "No region provided!! \n useage: aws_set_region<valid-aws-region"; else export REGION=$1 && echo "AWS REGION ID Exported => \$REGION ($REGION)"; fi'
-alias lg='lazygit'
 
 # Dont use alias when using virtual envs
 #alias python=python3
@@ -87,17 +86,5 @@ export PYENV_VIRTUALENV_DISABLE_PROMPT=1
 source /usr/local/bin/virtualenvwrapper.sh
 
 eval $(thefuck --alias)
-
-lg()
-{
-    export LAZYGIT_NEW_DIR_FILE=~/.lazygit/newdir
-
-    lazygit "$@"
-
-    if [ -f $LAZYGIT_NEW_DIR_FILE ]; then
-            cd "$(cat $LAZYGIT_NEW_DIR_FILE)"
-            rm -f $LAZYGIT_NEW_DIR_FILE > /dev/null
-    fi
-}
 
 echo "initalizing..."

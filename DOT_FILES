@@ -10,7 +10,9 @@ ln -s ~/.dotfiles/.ohmyzsh ~/
 
 
 # Ubuntu
-curl https://pyenv.run | zsh
-apt-get install zsh python-pip virtualenv linuxbrew-wrapper -y
-pip install lazygit thefuck
+sudo apt-get install zsh python-pip virtualenv linuxbrew-wrapper -y
+# Brew taps
+brew install jesseduffield/lazygit/lazygit
+# Brew Installs
+brew install thefuck neovim lazygit awscli
 
