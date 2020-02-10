@@ -28,4 +28,5 @@ pip3 install virtualenvwrapper
 
 # Brew Installs
 brew install  pyenv pyenv-virtualenvwrapper pre-commit  git-secrets 
+brew install --HEAD pyenv-virtualenv
 
