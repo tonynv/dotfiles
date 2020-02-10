@@ -19,6 +19,7 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
 
 	export PYENV_VIRTUALENV_DISABLE_PROMPT=1
 	source /usr/local/bin/virtualenvwrapper.sh
+  alias docker_ecr_login=$(aws ecr get-login --region us-west-2 --no-include-email)
 else
         # Unknown.
 fi
@@ -76,7 +77,6 @@ alias docker_cleanup_images='docker rmi $(docker images -a -q) -f'
 alias docker_stopall='docker stop $(docker ps -a -q) '
 alias docker_remove='docker rm  $(docker ps -a -q) -f'
 alias docker_killall='docker stop $(docker ps -a -q) && docker rm  $(docker ps -a -q) -f'
-alias docker_ecr_login=$(aws ecr get-login --region us-west-2 --no-include-email)
 alias vi='nvim'
 alias work='cd ~/work'
 alias ls='/bin/ls -lhG'
