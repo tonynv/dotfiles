@@ -2,17 +2,34 @@
 # If you come from bash you might have to change your $PATH.
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
         # Linux
-    export PATH=$PATH:~/.linuxbrew/bin/
-    export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
+    	export PATH=$PATH:~/.linuxbrew/bin/
+    	export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
 elif [[ "$OSTYPE" == "darwin"* ]]; then
         # Mac OSX
-    export PATH="$HOME/.usr/bin:/usr/local/bin:/usr/local/sbin:$PATH"
-    export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3
-    export PROJECT_HOME=~/PycharmProjects
-    export AWS_PROFILE=tonynv
+	export PATH="$HOME/.usr/bin:/usr/local/bin:/usr/local/sbin:$PATH"
+	export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3
+	export PROJECT_HOME=~/PycharmProjects
+	export AWS_PROFILE=tonynv
+	export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
+	eval "$(pyenv init -)"
+	eval "$(pyenv virtualenv-init -)"
+	export PYENV_ROOT=$HOME/.pyenv
+	export PATH=$PYENV_ROOT/bin:$PATH
+
+	# directory for virtualenvs created using virtualenvwrapper
+	export WORKON_HOME=~/.virtualenvs
+	# ensure all new environments are isolated from the site-packages directory
+	export VIRTUALENVWRAPPER_VIRTUALENV_ARGS='--no-site-packages'
+	# use the same directory for virtualenvs as virtualenvwrapper
+	export PIP_VIRTUALENV_BASE=$WORKON_HOME
+	# makes pip detect an active virtualenv and install to it
+	export PIP_RESPECT_VIRTUALENV=true
+	export PYENV_VIRTUALENV_DISABLE_PROMPT=1
+	source /usr/local/bin/virtualenvwrapper.sh
 else
         # Unknown.
 fi
+
 export PATH="$HOME/.usr/bin:/usr/local/bin:/usr/local/sbin:$PATH"
 export PYTHONBREAKPOINT="pudb.set_trace"
 export PYTHON_CONFIGURE_OPTS="--enable-framework"
@@ -60,15 +77,8 @@ alias aws_get_account_id='aws sts get-caller-identity | jq -r ".Account"'
 alias aws_set_account_id='export ACCOUNT=$(aws sts get-caller-identity | jq -r ".Account") ;echo "AWS ACCOUNT ID Exported => \$ACCOUNT ($ACCOUNT)"'
 alias aws_set_region='if [[ $1 == "" ]]; then  echo "No region provided!! \n useage: aws_set_region<valid-aws-region"; else export REGION=$1 && echo "AWS REGION ID Exported => \$REGION ($REGION)"; fi'
 
-# Dont use alias when using virtual envs
-#alias python=python3
-#alias pip=pip3
-alias vim=/usr/local/bin/nvim
-
 export EDITOR='vim'
 
-#PROMPT="$PS1
-#"
 
 # virtualenvwrapper configs
 # $ pip install virtualenvwrapper
@@ -77,22 +87,5 @@ export EDITOR='vim'
 # workon project_name
 # rmvirtualenv venv [removes
 #
-export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
-export PYENV_ROOT=$HOME/.pyenv
-export PATH=$PYENV_ROOT/bin:$PATH
-
-
-# directory for virtualenvs created using virtualenvwrapper
-export WORKON_HOME=~/.virtualenvs
-# ensure all new environments are isolated from the site-packages directory
-export VIRTUALENVWRAPPER_VIRTUALENV_ARGS='--no-site-packages'
-# use the same directory for virtualenvs as virtualenvwrapper
-export PIP_VIRTUALENV_BASE=$WORKON_HOME
-# makes pip detect an active virtualenv and install to it
-export PIP_RESPECT_VIRTUALENV=true
-export PYENV_VIRTUALENV_DISABLE_PROMPT=1
-source /usr/local/bin/virtualenvwrapper.sh
 
 echo "initalizing..."
