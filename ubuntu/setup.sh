@@ -1,4 +1,6 @@
 #Ubuntu
+#useradd -s /usr/bin/zsh -G admin tonynv
+sudo hostname cloud-dev
 
 [[ -f ~/.zshrc ]] && mv ~/.zshrc ~/zshrc_old
 

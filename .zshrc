@@ -2,8 +2,13 @@
 # If you come from bash you might have to change your $PATH.
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
         # Linux
-    	export PATH=$PATH:~/.linuxbrew/bin/
+	if [[  -d /home/linuxbrew/.linuxbrew/bin ]]; then
+    		export PATH=/home/linuxbrew/.linuxbrew/bin:$PATH
+	else
+    		export PATH=~/.linuxbrew/bin/:$PATH
+	fi 
     	export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
+	source ~/.local/bin/virtualenvwrapper.sh
 elif [[ "$OSTYPE" == "darwin"* ]]; then
         # Mac OSX
 	export PATH="$HOME/.usr/bin:/usr/local/bin:/usr/local/sbin:$PATH"
@@ -11,28 +16,31 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
 	export PROJECT_HOME=~/PycharmProjects
 	export AWS_PROFILE=tonynv
 	export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
-	eval "$(pyenv init -)"
-	eval "$(pyenv virtualenv-init -)"
-	export PYENV_ROOT=$HOME/.pyenv
-	export PATH=$PYENV_ROOT/bin:$PATH
 
-	# directory for virtualenvs created using virtualenvwrapper
-	export WORKON_HOME=~/.virtualenvs
-	# ensure all new environments are isolated from the site-packages directory
-	export VIRTUALENVWRAPPER_VIRTUALENV_ARGS='--no-site-packages'
-	# use the same directory for virtualenvs as virtualenvwrapper
-	export PIP_VIRTUALENV_BASE=$WORKON_HOME
-	# makes pip detect an active virtualenv and install to it
-	export PIP_RESPECT_VIRTUALENV=true
 	export PYENV_VIRTUALENV_DISABLE_PROMPT=1
 	source /usr/local/bin/virtualenvwrapper.sh
 else
         # Unknown.
 fi
 
+# Python Configs
 export PATH="$HOME/.usr/bin:/usr/local/bin:/usr/local/sbin:$PATH"
 export PYTHONBREAKPOINT="pudb.set_trace"
 export PYTHON_CONFIGURE_OPTS="--enable-framework"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+export PYENV_ROOT=$HOME/.pyenv
+export PATH=$PYENV_ROOT/bin:$PATH
+
+# directory for virtualenvs created using virtualenvwrapper
+export WORKON_HOME=~/.virtualenvs
+# ensure all new environments are isolated from the site-packages directory
+export VIRTUALENVWRAPPER_VIRTUALENV_ARGS='--no-site-packages'
+# use the same directory for virtualenvs as virtualenvwrapper
+export PIP_VIRTUALENV_BASE=$WORKON_HOME
+# makes pip detect an active virtualenv and install to it
+export PIP_RESPECT_VIRTUALENV=true
+export PYENV_VIRTUALENV_DISABLE_PROMPT=1
 
 
 # Path to your oh-my-zsh installation.
