@@ -97,3 +97,5 @@ export EDITOR='vim'
 #
 
 echo "initalizing..."
+[[ -f  ~/.zshrc_includes ]] && source .zshrc_includes;
+
