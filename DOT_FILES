@@ -10,7 +10,7 @@ ln -s ~/.dotfiles/.ohmyzsh ~/
 
 
 # Ubuntu
-sudo apt-get install zsh python3-pip virtualenv linuxbrew-wrapper -y
+sudo apt-get install zsh python3-pip virtualenv linuxbrew-wrapper awscli -y
 # Brew taps
 brew install jesseduffield/lazygit/lazygit
 # Brew Installs
