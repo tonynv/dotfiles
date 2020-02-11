@@ -2,6 +2,8 @@
 #useradd -s /usr/bin/zsh -G admin tonynv
 
 [[ -f ~/.zshrc ]] && mv ~/.zshrc ~/zshrc_old
+touch ~/.zshrc_includes
+
 
 ln -s ~/.dotfiles/.vimrc ~/
 ln -s ~/.dotfiles/.zshrc ~/
