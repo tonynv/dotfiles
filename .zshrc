@@ -7,6 +7,7 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
 	else
     		export PATH=~/.linuxbrew/bin/:$PATH
 	fi 
+	export PATH="$HOME/.usr/bin:~/.local/bin:/usr/local/bin:/usr/local/sbin:$PATH"
     	export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
 	source ~/.local/bin/virtualenvwrapper.sh
 elif [[ "$OSTYPE" == "darwin"* ]]; then
