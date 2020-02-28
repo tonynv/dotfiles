@@ -686,7 +686,7 @@ vnoremap <Space> zf
 "nnoremap <C-B> :!aws cloudformation validate-template --template-body file:///%:p<CR>
 nnoremap <C-B> :!aws.cfn.validate.sh %:p<CR>
 "nnoremap <C-J> :%!jq '.'
-nnoremap <C-J> :%!python -mjson.tool <CR>
+"nnoremap <C-J> :%!python -mjson.tool <CR>
 nnoremap <C-Y> :set filetype=yaml <CR>
 set cursorline
 
