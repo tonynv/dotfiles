@@ -85,6 +85,8 @@ alias ctags="`brew --prefix`/bin/ctags"
 alias aws_get_account_id='aws sts get-caller-identity | jq -r ".Account"'
 alias aws_set_account_id='export ACCOUNT=$(aws sts get-caller-identity | jq -r ".Account") ;echo "AWS ACCOUNT ID Exported => \$ACCOUNT ($ACCOUNT)"'
 alias aws_set_region='if [[ $1 == "" ]]; then  echo "No region provided!! \n useage: aws_set_region<valid-aws-region"; else export REGION=$1 && echo "AWS REGION ID Exported => \$REGION ($REGION)"; fi'
+alias fox_open='open -a firefox -g .'
+alias tf='~/.usr/bin/terraform'
 
 export EDITOR='vim'
 
@@ -99,4 +101,17 @@ export EDITOR='vim'
 
 echo "initalizing..."
 [[ -f  ~/.zshrc_includes ]] && source .zshrc_includes;
+
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+
+export PATH="/usr/local/opt/sqlite/bin:$PATH"
+export PATH="/usr/local/opt/ruby/bin:$PATH"
+export LDFLAGS="-L/usr/local/opt/ruby/lib"
+export CPPFLAGS="-I/usr/local/opt/ruby/include"
+export PKG_CONFIG_PATH="/usr/local/opt/sqlite/lib/pkgconfig"
+
 
