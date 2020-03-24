@@ -3,8 +3,11 @@ set nocompatible
 filetype on
 filetype plugin on
 filetype plugin indent on
+syntax enable
+syntax on
+set mouse=
 
-colorscheme slate
+colorscheme turbo
 set clipboard=unnamed
 "" Encoding
 set encoding=utf-8
@@ -31,6 +34,10 @@ set smartindent
 set smarttab
 set expandtab
 set number
+
+"" Fold mode
+set foldmethod=syntax
+set foldcolumn=2
 
 "Plugins
 call plug#begin('~/.vim/plugged')
@@ -127,3 +134,13 @@ augroup python
 		au FileType python setlocal textwidth=80 
 		au FileType python map <F7> :w<CR>:!pylint "%"<CR>
 augroup END
+
+augroup terraform
+    au!
+    au BufEnter *.tf colorscheme neon
+		au BufEnter *.tf map <F7> :w<CR>:!tflint "%"<CR>
+augroup END
+
+
+
+
