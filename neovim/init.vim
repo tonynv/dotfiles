@@ -166,7 +166,7 @@ call plug#end()
 "=====================================================
 augroup cfn
     au!
-    au BufNewFile,BufRead *.template* setlocal ft=yaml.cloudformation 
+    au BufNewFile,BufRead *.template* setlocal ft=yaml.cloudformation foldlevel=1
     au BufEnter *.template* colorscheme wombat256mod
     au BufEnter *.template* nnoremap <C-B> :!aws.cfn.validate.sh %:p<CR>
 
