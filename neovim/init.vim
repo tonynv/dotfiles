@@ -41,20 +41,33 @@ autocmd Filetype * AnyFoldActivate
 let g:anyfold_fold_comments=1
 set foldlevel=0
 
+"" Ale Linters
+let b:ale_linters = {'terraform': ['tflint']}
+let b:ale_linters = {'yaml.cloudformation': ['cfn_lint']}
+let b:ale_linters = {'python': ['flake8', 'pylint']}
+let g:ale_list_window_size = 5
+let g:ale_sign_error = '✘'
+let g:ale_sign_warning = '⚠'
+highlight ALEErrorSign ctermbg=NONE ctermfg=red
+highlight ALEWarningSign ctermbg=NONE ctermfg=yellow
+
+let g:airline#extensions#ale#enabled = 1
+
+
 
 "Plugins
 call plug#begin('~/.vim/plugged')
 "---------------------------=== General Pluging ===------------------------------
 Plug 'scrooloose/nerdtree'                " Project and file navigation
 Plug 'jieyu/ftplugin.vim'
-Plug 'w0rp/ale'                           " Async Lint Engine
+Plug 'dense-analysis/ale'                           " Async Lint Engine
 "---------------------------=== Code Folding ===------------------------------
 Plug 'pseewald/vim-anyfold'
 "---------------------------=== Vim Airline     ===------------------------------
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 "---------------------------=== Cloudfromation  ===------------------------------
-Plug 'scrooloose/syntastic'        " Syntax checking plugin for Vim
+"Plug 'scrooloose/syntastic'        " Syntax checking plugin for Vim
 Plug 'speshak/vim-cfn'             "CloudFormation syntax checking/highlighting
 "-------------------=== Python  ===-----------------------------
 Plug 'klen/python-mode'                   " Python mode (docs, refactor, lints...)
@@ -127,13 +140,13 @@ augroup cfn
     au!
     au BufNewFile,BufRead *.template* setlocal ft=yaml.cloudformation 
     au BufEnter *.template* colorscheme wombat256mod
-    au BufEnter *.template* let g:syntastic_cloudformation_checkers = ['cfn_lint']
     au BufEnter *.template* nnoremap <C-B> :!aws.cfn.validate.sh %:p<CR>
 
 augroup END
 
 augroup python
     au!
+    au BufNewFile,BufRead *.py setlocal ft=python
     au BufEnter *.py colorscheme monokai
     au BufNewFile,BufRead *.py set foldlevel=0
 	au FileType python setlocal textwidth=80 
@@ -142,6 +155,8 @@ augroup END
 
 augroup terraform
     au!
+    au BufNewFile,BufRead *.tf setlocal ft=terraform
+    au BufNewFile,BufRead *.hcl setlocal ft=terraform
     au BufEnter *.tf colorscheme neon
 	au BufEnter *.tf map <F7> :w<CR>:!tflint "%"<CR>
 augroup END
