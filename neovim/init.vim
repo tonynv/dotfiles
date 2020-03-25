@@ -197,7 +197,6 @@ augroup asciidoctor
     au BufNewFile,BufRead *.adoc setlocal ft=asciidoc
     au BufEnter *.adoc colorscheme summerfruit256
     au BufEnter *.adoc,*.asciidoc call AsciidoctorMappings()
-    au BufWritePost *.adoc Asciidoctor2HTML 
 augroup END
 
 
