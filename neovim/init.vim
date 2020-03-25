@@ -6,6 +6,8 @@ filetype plugin indent on
 syntax enable
 syntax on
 set mouse=
+set number
+let mapleader=','
 
 colorscheme turbo
 set clipboard=unnamed
@@ -33,7 +35,6 @@ set autoindent
 set smartindent
 set smarttab
 set expandtab
-set number
 
 "" Fold mode
 map <Space> za
@@ -45,6 +46,7 @@ set foldlevel=0
 let b:ale_linters = {'terraform': ['tflint']}
 let b:ale_linters = {'yaml.cloudformation': ['cfn_lint']}
 let b:ale_linters = {'python': ['flake8', 'pylint']}
+let b:ale_linters = {'markdown': ['mdl', 'writegood']}
 let g:ale_list_window_size = 5
 let g:ale_sign_error = '✘'
 let g:ale_sign_warning = '⚠'
@@ -69,7 +71,9 @@ Plug 'vim-airline/vim-airline-themes'
 "---------------------------=== Cloudfromation  ===------------------------------
 "Plug 'scrooloose/syntastic'        " Syntax checking plugin for Vim
 Plug 'speshak/vim-cfn'             "CloudFormation syntax checking/highlighting
-"-------------------=== Python  ===-----------------------------
+"---------------------------=== Python  ===-----------------------------
+Plug 'habamax/vim-asciidoctor'
+"---------------------------=== Python  ===-----------------------------
 Plug 'klen/python-mode'                   " Python mode (docs, refactor, lints...)
 Plug 'hynek/vim-python-pep8-indent'
 Plug 'mitsuhiko/vim-python-combined'
@@ -103,16 +107,10 @@ let g:airline#extensions#tagbar#enabled = 1
 let g:airline_skip_empty_sections = 1
 
 "=====================================================
-"" Syntastic settings
+"" Status settings
 "=====================================================
 set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
-set number
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
 "=====================================================
 "" TagBar settings
 "=====================================================
@@ -136,6 +134,9 @@ let g:NERDSpaceDelims = 1
 " Use compact syntax for prettified multi-line comments
 let g:NERDCompactSexyComs = 1
 
+"=====================================================
+"" CFN Settings
+"=====================================================
 augroup cfn
     au!
     au BufNewFile,BufRead *.template* setlocal ft=yaml.cloudformation 
@@ -144,6 +145,9 @@ augroup cfn
 
 augroup END
 
+"=====================================================
+"" Python Settings
+"=====================================================
 augroup python
     au!
     au BufNewFile,BufRead *.py setlocal ft=python
@@ -153,14 +157,47 @@ augroup python
 	au FileType python map <F7> :w<CR>:!pylint "%"<CR>
 augroup END
 
+"=====================================================
+"" Terraform Settings
+"=====================================================
 augroup terraform
     au!
     au BufNewFile,BufRead *.tf setlocal ft=terraform
     au BufNewFile,BufRead *.hcl setlocal ft=terraform
-    au BufEnter *.tf colorscheme neon
-	au BufEnter *.tf map <F7> :w<CR>:!tflint "%"<CR>
+    au BufEnter *.tf colorscheme wombat256mod
 augroup END
 
+"=====================================================
+"" Markdown Settings
+"=====================================================
+augroup markdown
+    au!
+    au BufNewFile,BufRead *.md setlocal ft=markdown
+    au BufEnter *.md colorscheme summerfruit256
+augroup END
 
+"=====================================================
+"" Asciidoctor Settings
+"=====================================================
+fun! AsciidoctorMappings()
+    nnoremap <buffer> <leader>oo :AsciidoctorOpenRAW<CR>
+    nnoremap <buffer> <leader>op :AsciidoctorOpenPDF<CR>
+    nnoremap <buffer> <leader>oh :AsciidoctorOpenHTML<CR>
+    nnoremap <buffer> <leader>ox :AsciidoctorOpenDOCX<CR>
+    nnoremap <buffer> <leader>ch :Asciidoctor2HTML<CR>
+    nnoremap <buffer> <leader>cp :Asciidoctor2PDF<CR>
+    nnoremap <buffer> <leader>cx :Asciidoctor2DOCX<CR>
+    nnoremap <buffer> <leader>p :AsciidoctorPasteImage<CR>
+    " :make will build pdfs
+    compiler asciidoctor2pdf
+endfun
+
+augroup asciidoctor
+    au!
+    au BufNewFile,BufRead *.adoc setlocal ft=asciidoc
+    au BufEnter *.adoc colorscheme summerfruit256
+    au BufEnter *.adoc,*.asciidoc call AsciidoctorMappings()
+    au BufWritePost *.adoc Asciidoctor2HTML 
+augroup END
 
 
