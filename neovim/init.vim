@@ -36,8 +36,11 @@ set expandtab
 set number
 
 "" Fold mode
-set foldmethod=syntax
-set foldcolumn=2
+map <Space> za
+autocmd Filetype * AnyFoldActivate
+let g:anyfold_fold_comments=1
+set foldlevel=0
+
 
 "Plugins
 call plug#begin('~/.vim/plugged')
@@ -45,7 +48,8 @@ call plug#begin('~/.vim/plugged')
 Plug 'scrooloose/nerdtree'                " Project and file navigation
 Plug 'jieyu/ftplugin.vim'
 Plug 'w0rp/ale'                           " Async Lint Engine
-
+"---------------------------=== Code Folding ===------------------------------
+Plug 'pseewald/vim-anyfold'
 "---------------------------=== Vim Airline     ===------------------------------
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -121,24 +125,25 @@ let g:NERDCompactSexyComs = 1
 
 augroup cfn
     au!
-    au BufNewFile,BufRead *.template.* setlocal ft=yaml.cloudformation
-    au BufEnter *template* colorscheme wombat256mod
-    au BufEnter *template* let g:syntastic_cloudformation_checkers = ['cfn_lint']
-    au BufEnter *template* nnoremap <C-B> :!aws.cfn.validate.sh %:p<CR>
+    au BufNewFile,BufRead *.template* setlocal ft=yaml.cloudformation 
+    au BufEnter *.template* colorscheme wombat256mod
+    au BufEnter *.template* let g:syntastic_cloudformation_checkers = ['cfn_lint']
+    au BufEnter *.template* nnoremap <C-B> :!aws.cfn.validate.sh %:p<CR>
 
 augroup END
 
 augroup python
     au!
     au BufEnter *.py colorscheme monokai
-		au FileType python setlocal textwidth=80 
-		au FileType python map <F7> :w<CR>:!pylint "%"<CR>
+    au BufNewFile,BufRead *.py set foldlevel=0
+	au FileType python setlocal textwidth=80 
+	au FileType python map <F7> :w<CR>:!pylint "%"<CR>
 augroup END
 
 augroup terraform
     au!
     au BufEnter *.tf colorscheme neon
-		au BufEnter *.tf map <F7> :w<CR>:!tflint "%"<CR>
+	au BufEnter *.tf map <F7> :w<CR>:!tflint "%"<CR>
 augroup END
 
 
