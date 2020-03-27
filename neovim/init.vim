@@ -13,6 +13,10 @@ set termguicolors
 let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
 let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 
+" Set python path to system python
+let g:python_host_prog = '/usr/local/bin/python2'
+let g:python3_host_prog = '/usr/local/bin/python3'
+
 
 colorscheme monokai
 set clipboard=unnamed
