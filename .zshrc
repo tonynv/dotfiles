@@ -1,5 +1,6 @@
 #.zshrc
 # If you come from bash you might have to change your $PATH.
+
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
         # Linux
 	if [[  -d /home/linuxbrew/.linuxbrew/bin ]]; then
@@ -101,3 +102,16 @@ export EDITOR='vim'
 echo "initalizing..."
 [[ -f  ~/.zshrc_includes ]] && source .zshrc_includes;
 
+prompt_end() {
+  if [[ -n $CURRENT_BG ]]; then
+      print -n "%{%k%F{$CURRENT_BG}%}$SEGMENT_SEPARATOR"
+  else
+      print -n "%{%k%}"
+  fi
+
+  print -n "%{%f%}"
+  CURRENT_BG='' 
+
+  #Adds the new line and ➜ as the start character.
+  printf "\n ➜";
+}

@@ -186,7 +186,7 @@ augroup END
 "=====================================================
 augroup python
     au!
-    au BufNewFile,BufRead *.py setlocal ft=python
+    au BufNewFile,BufRead *.py setlocal ft=python 
     au BufEnter *.py colorscheme monokai
     au BufNewFile,BufRead *.py set foldlevel=0
 	au FileType python setlocal textwidth=80 
@@ -194,6 +194,15 @@ augroup python
     au FileType python setlocal omnifunc=pythoncomplete#Complete
 augroup END
 
+"=====================================================
+"" Shell/Bash/Zsh Settings
+"=====================================================
+augroup sh
+    au!
+    au BufNewFile,BufRead *.sh setlocal ft=sh 
+    au BufNewFile,BufRead *.sh setlocal foldmethod=manual
+    au BufEnter *.sh colorscheme slate
+augroup END
 "=====================================================
 "" Terraform Settings
 "=====================================================
