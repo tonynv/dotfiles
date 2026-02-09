@@ -1,12 +1,14 @@
-# Private keys and secrets
+# Secrets (never commit these)
+.env*
+secrets.*
+
+# Private keys — managed by 1Password, never store in git
 id_*
 !id_*.pub
 *.pem
 *.key
 *.gpg
 *.asc
-.env*
-secrets.*
 
 # OS and editor junk
 .DS_Store

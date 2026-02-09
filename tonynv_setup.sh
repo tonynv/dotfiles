@@ -232,6 +232,93 @@ install_vim_plugins() {
     ok "Vim plugins installed"
 }
 
+# ---------- setup SSH ---------------------------------------------------------
+# Uses 1Password SSH agent when available, falls back to local Ed25519 keys.
+setup_ssh() {
+    local ssh_src="$DOTFILES_DIR/ssh"
+    local ssh_dst="$HOME/.ssh"
+    local op_sock="$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+
+    info "Setting up SSH..."
+    mkdir -p "$ssh_dst"
+    chmod 700 "$ssh_dst"
+
+    # Back up existing config if it differs
+    local dst_config="$ssh_dst/config"
+    if [ -f "$dst_config" ]; then
+        mkdir -p "$BACKUP_DIR"
+        local backup="$BACKUP_DIR/ssh_config.backup.$(date +%Y%m%d%H%M%S)"
+        warn "Backing up existing $dst_config -> $backup"
+        cp "$dst_config" "$backup"
+    fi
+
+    if [ -S "$op_sock" ]; then
+        # ---- 1Password path ----
+        ok "1Password SSH agent detected"
+
+        # Deploy 1Password ssh config
+        local src_config="$ssh_src/config"
+        if [ -f "$src_config" ]; then
+            cp "$src_config" "$dst_config"
+            chmod 600 "$dst_config"
+            ok "Deployed ssh config (1Password agent)"
+        fi
+
+        # Clean out old local keys (1Password manages keys now)
+        local removed=0
+        for keyfile in "$ssh_dst"/id_*; do
+            [ -f "$keyfile" ] || continue
+            mkdir -p "$BACKUP_DIR"
+            local fname
+            fname="$(basename "$keyfile")"
+            local bak="$BACKUP_DIR/${fname}.backup.$(date +%Y%m%d%H%M%S)"
+            warn "Removing old key $keyfile -> backed up to $bak"
+            mv "$keyfile" "$bak"
+            removed=$((removed + 1))
+        done
+        [ "$removed" -gt 0 ] && ok "Removed $removed old key(s) — backed up to $BACKUP_DIR"
+
+        ok "SSH setup complete (keys managed by 1Password)"
+    else
+        # ---- Fallback: local Ed25519 key ----
+        warn "1Password SSH agent not found — using local keys"
+
+        # Generate Ed25519 key if none exists
+        if [ ! -f "$ssh_dst/id_ed25519" ]; then
+            local email="${GIT_USER_EMAIL:-avattathil@gmail.com}"
+            info "Generating new Ed25519 key ($email)..."
+            ssh-keygen -t ed25519 -C "$email" -f "$ssh_dst/id_ed25519" -N ""
+            ok "Generated $ssh_dst/id_ed25519"
+            echo ""
+            warn "Add this public key to GitHub:"
+            echo ""
+            cat "$ssh_dst/id_ed25519.pub"
+            echo ""
+        else
+            ok "Ed25519 key already exists at $ssh_dst/id_ed25519"
+        fi
+
+        # Write a minimal config without 1Password agent
+        cat > "$dst_config" <<'SSHEOF'
+Host github.com
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/id_ed25519
+    IdentitiesOnly yes
+SSHEOF
+        chmod 600 "$dst_config"
+        ok "Deployed ssh config (local key)"
+
+        # Add key to agent
+        if [ -z "${SSH_AUTH_SOCK:-}" ]; then
+            eval "$(ssh-agent -s)" >/dev/null
+            info "Started ssh-agent"
+        fi
+        ssh-add "$ssh_dst/id_ed25519" 2>/dev/null || true
+        ok "SSH setup complete (local Ed25519 key)"
+    fi
+}
+
 # ---------- configure git ----------------------------------------------------
 configure_git() {
     # Priority: env vars > defaults (override with GIT_USER_NAME / GIT_USER_EMAIL)
@@ -290,6 +377,7 @@ main() {
     install_vim_plug
     link_dotfiles
     install_vim_plugins
+    setup_ssh
     configure_git
     set_default_shell
 
