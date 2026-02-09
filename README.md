@@ -94,6 +94,20 @@ On Linux, if `eza` is not available in the distro's package repos, the script fe
 | `tmux.conf` | `~/.tmux.conf` | Oh My Tmux base config |
 | `tmux.conf.local` | `~/.tmux.conf.local` | Tmux local overrides (theme, bindings) |
 
+## Configuration
+
+### Git Identity
+
+The setup script defaults to `Tony Vattathil <avattathil@gmail.com>`. Override with environment variables:
+
+```bash
+# Uses defaults
+./tonynv_setup.sh
+
+# Override for a different identity
+GIT_USER_NAME="Other Name" GIT_USER_EMAIL="other@example.com" ./tonynv_setup.sh
+```
+
 ## How Linking Works
 
 The setup script creates symlinks from `$HOME` back to this repo. If an existing dotfile is found that is **not** already a symlink, it is backed up with a timestamp:

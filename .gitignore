@@ -1,0 +1,15 @@
+# Private keys and secrets
+id_*
+!id_*.pub
+*.pem
+*.key
+*.gpg
+*.asc
+.env*
+secrets.*
+
+# OS and editor junk
+.DS_Store
+*.swp
+*.swo
+*~

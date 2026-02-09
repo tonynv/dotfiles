@@ -234,22 +234,23 @@ install_vim_plugins() {
 
 # ---------- configure git ----------------------------------------------------
 configure_git() {
-    local desired_name="Tony Vattathil"
-    local desired_email="avattathil@gmail.com"
+    # Priority: env vars > defaults (override with GIT_USER_NAME / GIT_USER_EMAIL)
+    local name="${GIT_USER_NAME:-Tony Vattathil}"
+    local email="${GIT_USER_EMAIL:-avattathil@gmail.com}"
 
     local current_name current_email
     current_name="$(git config --global user.name 2>/dev/null || true)"
     current_email="$(git config --global user.email 2>/dev/null || true)"
 
-    if [ "$current_name" = "$desired_name" ] && [ "$current_email" = "$desired_email" ]; then
-        ok "Git already configured (${desired_name} <${desired_email}>)"
+    if [ "$current_name" = "$name" ] && [ "$current_email" = "$email" ]; then
+        ok "Git already configured (${name} <${email}>)"
         return
     fi
 
     info "Configuring git user..."
-    git config --global user.name "$desired_name"
-    git config --global user.email "$desired_email"
-    ok "Git configured: ${desired_name} <${desired_email}>"
+    [ -n "$name" ]  && git config --global user.name "$name"
+    [ -n "$email" ] && git config --global user.email "$email"
+    ok "Git configured: ${name} <${email}>"
 }
 
 # ---------- set default shell ------------------------------------------------
