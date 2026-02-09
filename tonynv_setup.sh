@@ -82,6 +82,17 @@ pkg_install() {
     esac
 }
 
+# ---------- install vim if missing -------------------------------------------
+install_vim() {
+    if command -v vim &>/dev/null; then
+        ok "vim already installed: $(vim --version | head -1)"
+        return
+    fi
+    info "Installing vim..."
+    pkg_install vim
+    ok "vim installed"
+}
+
 # ---------- install core packages --------------------------------------------
 install_packages() {
     info "Installing core packages..."
@@ -246,6 +257,7 @@ main() {
 
     detect_os
     install_packages
+    install_vim
     install_oh_my_zsh
     install_oh_my_tmux
     install_vim_plug
