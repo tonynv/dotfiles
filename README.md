@@ -5,7 +5,7 @@ Personal dotfiles and bootstrap script to configure a consistent shell, editor, 
 ## Quick Start
 
 ```bash
-git clone <repo-url> ~/dotfiles
+git clone https://github.com/tonynv/dotfiles ~/dotfiles
 cd ~/dotfiles
 ./tonynv_setup.sh
 ```
@@ -15,8 +15,8 @@ cd ~/dotfiles
 | Platform | Package Manager |
 |---|---|
 | macOS | Homebrew (installed automatically if missing) |
-| Debian / Ubuntu / Pop!_OS / Mint | apt |
-| Fedora / RHEL / CentOS / Rocky / Amazon Linux | dnf / yum |
+| Debian / Ubuntu 
+| Fedora / RHEL / CentOS / Amazon Linux | dnf / yum |
 
 The script auto-detects the OS at runtime — no flags needed.
 
