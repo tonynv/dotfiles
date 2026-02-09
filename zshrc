@@ -101,8 +101,8 @@ export VISUAL='vim'
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 export PATH="$HOME/.local/bin:$PATH"
 
-# vi -> vim alias
-alias vi="vim"
+# vi -> vim alias (only when vim is installed)
+command -v vim &>/dev/null && alias vi="vim"
 
 # eza aliases (modern ls replacement)
 alias ll="eza --long --classify --group-directories-first"
