@@ -4,6 +4,7 @@
 set -euo pipefail
 
 DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd)"
+BACKUP_DIR="/tmp/.tonynv_setup"
 
 # ---------- colors -----------------------------------------------------------
 RED='\033[0;31m'
@@ -193,13 +194,18 @@ link_dotfiles() {
             continue
         fi
 
-        # Back up existing file if it's not already a symlink to our dotfile
-        if [ -e "$dst_path" ] && [ ! -L "$dst_path" ]; then
-            local backup="${dst_path}.backup.$(date +%Y%m%d%H%M%S)"
+        # Skip if symlink already points to the correct target
+        if [ -L "$dst_path" ] && [ "$(readlink "$dst_path")" = "$src_path" ]; then
+            ok "Already linked $dst_path -> $src_path"
+            continue
+        fi
+
+        # Back up existing file (regular file or wrong symlink) to BACKUP_DIR
+        if [ -e "$dst_path" ] || [ -L "$dst_path" ]; then
+            mkdir -p "$BACKUP_DIR"
+            local backup="$BACKUP_DIR/${dst}.backup.$(date +%Y%m%d%H%M%S)"
             warn "Backing up existing $dst_path -> $backup"
             mv "$dst_path" "$backup"
-        elif [ -L "$dst_path" ]; then
-            rm "$dst_path"
         fi
 
         ln -s "$src_path" "$dst_path"
@@ -224,6 +230,26 @@ install_vim_plugins() {
     info "Installing Vim plugins (this may take a moment)..."
     vim -E -s +PlugInstall +qall 2>/dev/null || true
     ok "Vim plugins installed"
+}
+
+# ---------- configure git ----------------------------------------------------
+configure_git() {
+    local desired_name="Tony Vattathil"
+    local desired_email="avattathil@gmail.com"
+
+    local current_name current_email
+    current_name="$(git config --global user.name 2>/dev/null || true)"
+    current_email="$(git config --global user.email 2>/dev/null || true)"
+
+    if [ "$current_name" = "$desired_name" ] && [ "$current_email" = "$desired_email" ]; then
+        ok "Git already configured (${desired_name} <${desired_email}>)"
+        return
+    fi
+
+    info "Configuring git user..."
+    git config --global user.name "$desired_name"
+    git config --global user.email "$desired_email"
+    ok "Git configured: ${desired_name} <${desired_email}>"
 }
 
 # ---------- set default shell ------------------------------------------------
@@ -263,6 +289,7 @@ main() {
     install_vim_plug
     link_dotfiles
     install_vim_plugins
+    configure_git
     set_default_shell
 
     echo ""
