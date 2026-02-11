@@ -100,54 +100,17 @@ install_packages() {
 
     case "$OS" in
         macos)
-            pkg_install zsh vim tmux git curl eza
+            pkg_install zsh vim tmux git curl tree
             ;;
         debian)
-            pkg_install zsh vim tmux git curl
-            # eza: install from cargo or binary if not available in apt
-            if ! command -v eza &>/dev/null; then
-                if apt-cache show eza &>/dev/null 2>&1; then
-                    pkg_install eza
-                else
-                    info "Installing eza from GitHub releases..."
-                    install_eza_binary
-                fi
-            fi
+            pkg_install zsh vim tmux git curl tree
             ;;
         fedora)
-            pkg_install zsh vim tmux git curl
-            if ! command -v eza &>/dev/null; then
-                if dnf list eza &>/dev/null 2>&1; then
-                    pkg_install eza
-                else
-                    info "Installing eza from GitHub releases..."
-                    install_eza_binary
-                fi
-            fi
+            pkg_install zsh vim tmux git curl tree
             ;;
     esac
 
     ok "Core packages installed"
-}
-
-install_eza_binary() {
-    local arch
-    arch="$(uname -m)"
-    case "$arch" in
-        x86_64)  arch="x86_64" ;;
-        aarch64) arch="aarch64" ;;
-        arm64)   arch="aarch64" ;;
-        *)       warn "Unsupported arch for eza binary: $arch — skipping"; return ;;
-    esac
-
-    local tmp
-    tmp="$(mktemp -d)"
-    local url="https://github.com/eza-community/eza/releases/latest/download/eza_${arch}-unknown-linux-gnu.tar.gz"
-    curl -fsSL "$url" -o "$tmp/eza.tar.gz"
-    tar -xzf "$tmp/eza.tar.gz" -C "$tmp"
-    sudo install -m 755 "$tmp/eza" /usr/local/bin/eza
-    rm -rf "$tmp"
-    ok "eza installed to /usr/local/bin/eza"
 }
 
 # ---------- Oh My Zsh --------------------------------------------------------
