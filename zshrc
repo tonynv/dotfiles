@@ -104,7 +104,22 @@ export PATH="$HOME/.local/bin:$PATH"
 # vi -> vim alias (only when vim is installed)
 command -v vim &>/dev/null && alias vi="vim"
 
-# eza aliases (modern ls replacement)
-alias ll="eza --long --classify --group-directories-first"
-alias lt="eza --tree --classify --group-directories-first"
-alias ls="eza --long --all --classify --group-directories-first"
+# ls colors and aliases
+if ls --color=auto / &>/dev/null 2>&1; then
+  # GNU ls (Linux)
+  eval "$(dircolors -b 2>/dev/null)"
+  alias ls="ls --color=auto -F --group-directories-first"
+  alias ll="ls -lh"
+  alias la="ls -lhA"
+else
+  # BSD ls (macOS)
+  export CLICOLOR=1
+  export LSCOLORS="ExGxBxDxCxegedabagacad"
+  alias ls="ls -GF"
+  alias ll="ls -lh"
+  alias la="ls -lhA"
+fi
+
+if command -v tree &>/dev/null; then
+  alias lt="tree -C --dirsfirst"
+fi
