@@ -9,6 +9,8 @@ id_*
 *.key
 *.gpg
 *.asc
+# Claude
+.claude
 
 # OS and editor junk
 .DS_Store
