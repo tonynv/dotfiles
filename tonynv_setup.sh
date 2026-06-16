@@ -176,6 +176,34 @@ install_oh_my_tmux() {
     fi
 }
 
+# ---------- tmux plugins (TPM + resurrect + continuum) -----------------------
+install_tmux_plugins() {
+    local tpm_dir="$HOME/.tmux/plugins/tpm"
+    if [ -d "$tpm_dir" ]; then
+        ok "TPM already installed"
+    else
+        info "Installing TPM (tmux plugin manager)..."
+        git clone https://github.com/tmux-plugins/tpm "$tpm_dir"
+        ok "TPM installed"
+    fi
+
+    local plugins_dir="$HOME/.tmux/plugins"
+    local -a plugins=(
+        "tmux-plugins/tmux-resurrect"
+        "tmux-plugins/tmux-continuum"
+    )
+    for plugin in "${plugins[@]}"; do
+        local name="${plugin##*/}"
+        if [ -d "$plugins_dir/$name" ]; then
+            ok "tmux plugin already installed: $name"
+        else
+            info "Installing tmux plugin: $name..."
+            git clone "https://github.com/$plugin" "$plugins_dir/$name"
+            ok "tmux plugin installed: $name"
+        fi
+    done
+}
+
 # ---------- symlink dotfiles -------------------------------------------------
 link_dotfiles() {
     info "Linking dotfiles..."
@@ -234,6 +262,53 @@ install_vim_plugins() {
     info "Installing Vim plugins (this may take a moment)..."
     vim -E -s +PlugInstall +qall 2>/dev/null || true
     ok "Vim plugins installed"
+}
+
+# ---------- iTerm2 install + preferences -------------------------------------
+install_iterm2() {
+    if [ "$OS" != "macos" ]; then
+        info "Skipping iTerm2 install (not macOS)"
+        return
+    fi
+
+    if brew list --cask iterm2 &>/dev/null; then
+        ok "iTerm2 already installed: $(brew info --cask iterm2 | awk '/^iterm2:/{print $2}')"
+        return
+    fi
+
+    info "Installing iTerm2..."
+    brew install --cask iterm2
+    ok "iTerm2 installed"
+}
+
+setup_iterm2() {
+    local iterm2_prefs_src="$DOTFILES_DIR/iterm2"
+
+    if [ "$OS" != "macos" ]; then
+        info "Skipping iTerm2 setup (not macOS)"
+        return
+    fi
+
+    if [ ! -d "$iterm2_prefs_src" ]; then
+        warn "iTerm2 prefs not found in dotfiles ($iterm2_prefs_src) — skipping"
+        return
+    fi
+
+    # Tell iTerm2 to load from (and save back to) the dotfiles folder
+    local current_folder
+    current_folder="$(defaults read com.googlecode.iterm2 PrefsCustomFolder 2>/dev/null || true)"
+    local current_load
+    current_load="$(defaults read com.googlecode.iterm2 LoadPrefsFromCustomFolder 2>/dev/null || true)"
+
+    if [ "$current_folder" = "$iterm2_prefs_src" ] && [ "$current_load" = "1" ]; then
+        ok "iTerm2 already loading prefs from $iterm2_prefs_src"
+        return
+    fi
+
+    info "Pointing iTerm2 at dotfiles prefs folder: $iterm2_prefs_src"
+    defaults write com.googlecode.iterm2 PrefsCustomFolder -string "$iterm2_prefs_src"
+    defaults write com.googlecode.iterm2 LoadPrefsFromCustomFolder -bool true
+    ok "iTerm2 will load prefs from $iterm2_prefs_src (restart iTerm2 to apply)"
 }
 
 # ---------- setup SSH ---------------------------------------------------------
@@ -379,9 +454,12 @@ main() {
     install_oh_my_zsh
     install_powerlevel10k
     install_oh_my_tmux
+    install_tmux_plugins
     install_vim_plug
     link_dotfiles
     install_vim_plugins
+    install_iterm2
+    setup_iterm2
     setup_ssh
     configure_git
     set_default_shell
