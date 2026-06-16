@@ -124,6 +124,47 @@ install_oh_my_zsh() {
     ok "Oh My Zsh installed"
 }
 
+# ---------- Powerlevel10k + Nerd Font ----------------------------------------
+install_powerlevel10k() {
+    local p10k_dir="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k"
+    if [ -d "$p10k_dir" ]; then
+        ok "Powerlevel10k already installed"
+    else
+        info "Installing Powerlevel10k..."
+        git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$p10k_dir"
+        ok "Powerlevel10k installed"
+    fi
+
+    # MesloLGS Nerd Font — Powerlevel10k's recommended Powerline font
+    case "$OS" in
+        macos)
+            if brew list --cask font-meslo-lg-nerd-font &>/dev/null; then
+                ok "MesloLGS Nerd Font already installed"
+            else
+                info "Installing MesloLGS Nerd Font..."
+                brew install --cask font-meslo-lg-nerd-font
+                ok "MesloLGS Nerd Font installed"
+            fi
+            ;;
+        debian|fedora)
+            local font_dir="$HOME/.local/share/fonts"
+            if ls "$font_dir"/MesloLGS*NF*.ttf &>/dev/null; then
+                ok "MesloLGS Nerd Font already installed"
+            else
+                info "Installing MesloLGS Nerd Font..."
+                mkdir -p "$font_dir"
+                local base="https://github.com/romkatv/powerlevel10k-media/raw/master"
+                for style in "Regular" "Bold" "Italic" "Bold%20Italic"; do
+                    local name="MesloLGS NF ${style//\%20/ }.ttf"
+                    curl -fsSL "$base/MesloLGS%20NF%20${style}.ttf" -o "$font_dir/$name"
+                done
+                command -v fc-cache &>/dev/null && fc-cache -f "$font_dir" >/dev/null 2>&1 || true
+                ok "MesloLGS Nerd Font installed (set your terminal font to 'MesloLGS NF')"
+            fi
+            ;;
+    esac
+}
+
 # ---------- Oh My Tmux (gpakosz/.tmux) ---------------------------------------
 install_oh_my_tmux() {
     if [ -f "$HOME/.tmux/.tmux.conf" ]; then
@@ -285,7 +326,7 @@ SSHEOF
 # ---------- configure git ----------------------------------------------------
 configure_git() {
     # Priority: env vars > defaults (override with GIT_USER_NAME / GIT_USER_EMAIL)
-    local name="${GIT_USER_NAME:-Tony Vattathil}"
+    local name="${GIT_USER_NAME:-tonynv}"
     local email="${GIT_USER_EMAIL:-avattathil@gmail.com}"
 
     local current_name current_email
@@ -336,6 +377,7 @@ main() {
     install_packages
     install_vim
     install_oh_my_zsh
+    install_powerlevel10k
     install_oh_my_tmux
     install_vim_plug
     link_dotfiles
