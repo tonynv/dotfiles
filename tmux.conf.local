@@ -395,8 +395,18 @@ tmux_conf_urlscan_options="--compact --dedupe"
 # if you don't want Oh my tmux! to alter a binding or a setting, use #!important
 # bind c new-window -c '#{pane_current_path}' #!important
 
-# split current window vertically
-bind | split-window -h
+# split current window vertically, then prompt for pane label
+bind | split-window -h \; command-prompt -p "Pane label:" "select-pane -T '%%'" #!important
+
+# split current window horizontally, then prompt for pane label
+bind - split-window -v \; command-prompt -p "Pane label:" "select-pane -T '%%'" #!important
+
+# label the current pane without splitting (prefix + P)
+bind P command-prompt -p "Pane label:" "select-pane -T '%%'"
+
+# show pane labels in the border
+set -g pane-border-status top
+set -g pane-border-format " #[bold]#{pane_title}#[default] "
 
 # move status line to top
 #set -g status-position top
